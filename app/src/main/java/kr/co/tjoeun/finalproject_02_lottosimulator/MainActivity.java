@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity {
     int[] winLottoNumArr = new int[6];
     int bonusNum = 0;
     long userMoneyAmount = 0;
+    int [] myLottoNumArr = {3, 13, 14, 27, 30, 41};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,5 +134,30 @@ public class MainActivity extends BaseActivity {
 //        돈을 천원 지불하는
         userMoneyAmount += 1000;
         binding.useMoneyTxt.setText(String.format("사용 금액 : %d원", userMoneyAmount));
+
+//        내 입력번호가 몇등인지 확인하자
+//        내 번호를 하나 들고 => 당첨번호 여섯개를 돌아보자
+//        얻어낼것은 몇개의 숫자를 맞췄는지
+
+//        맞춘갯수를 담아줄 변수
+        int correctCount = 0;
+        for (int myNum : myLottoNumArr){
+            for (int winNum : winLottoNumArr){
+                if (myNum == winNum){
+                    correctCount++;
+                }
+            }
+        }
+//        correctCount의 값에 따라 등수를 판정.
+        if (correctCount == 6) {
+//            1등
+        }else if (correctCount == 5 ){
+//            2등인지 3등인지 재검사가 필요하다 => 보너스번호를 맞췄는지 확인을 해보자
+        }else if (correctCount == 4) {
+//            4등
+        }else if (correctCount == 3) {
+//            5등
+        }
+
     }
 }
