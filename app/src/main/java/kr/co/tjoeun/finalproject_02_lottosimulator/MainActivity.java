@@ -23,7 +23,9 @@ public class MainActivity extends BaseActivity {
     int[] winLottoNumArr = new int[6];
     int bonusNum = 0;
     long userMoneyAmount = 0;
+
     int [] myLottoNumArr = {3, 13, 14, 27, 30, 41};
+
     long winMoneyAmount = 0;
     int firstRankCount = 0;
     int secondRankCount = 0;
@@ -31,6 +33,8 @@ public class MainActivity extends BaseActivity {
     int fourthRankCount = 0;
     int fifthRankCount = 0;
     int nothingCount = 0;
+
+    boolean isAutoLottoRunning = false;
     
 //    로또를 사는 행동 패턴
 //   mHandler가 로또구매를 다루게
@@ -38,7 +42,7 @@ public class MainActivity extends BaseActivity {
     Runnable buyLottoRunable = new Runnable() {
     @Override
     public void run() {
-        if (userMoneyAmount < 10000000 ){
+        if (userMoneyAmount < 100000000 ){
             makeWinLottoNum();
             checkLottoRank();
             buyLottoLoop();
@@ -49,6 +53,16 @@ public class MainActivity extends BaseActivity {
 };
     void buyLottoLoop() {
         mHandler.post(buyLottoRunable);
+//        돌아가고 있다
+        isAutoLottoRunning = true;
+        binding.buyAutoLottoBtn.setText("자동 구매 중단");
+    }
+
+    void stopBuyingLotto() {
+        mHandler.removeCallbacks(buyLottoRunable);
+        isAutoLottoRunning = false;
+        binding.buyAutoLottoBtn.setText("자동 구매 재개");
+
     }
 
     @Override
@@ -71,7 +85,13 @@ public class MainActivity extends BaseActivity {
 //                    makeWinLottoNum();
 //                    checkLottoRank();
 //                }
-                buyLottoLoop();
+                if (!isAutoLottoRunning) {
+                    buyLottoLoop();
+                }else{
+                    stopBuyingLotto();
+
+                }
+
             }
         });
 
