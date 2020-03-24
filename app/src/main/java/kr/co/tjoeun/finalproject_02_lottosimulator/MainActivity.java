@@ -40,6 +40,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+        binding.buyAutoLottoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                사용금액의총액이 1천만원이 될때까지 반복
+                while (userMoneyAmount < 100000000) {
+//                    당첨번호를 만들고 => 등수를 카운팅 반복
+                    makeWinLottoNum();
+                    checkLottoRank();
+                }
+            }
+        });
+
         binding.buyOneLottoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +171,8 @@ public class MainActivity extends BaseActivity {
 //        correctCount의 값에 따라 등수를 판정.
         if (correctCount == 6) {
 //            1등
-            winMoneyAmount += 1200000000;
+            winMoneyAmount += 1600000000;
+            firstRankCount++;
         }else if (correctCount == 5 ){
 //            2등인지 3등인지 재검사가 필요하다 => 보너스번호를 맞췄는지 확인을 해보자
 //            => 내 번호중에 보너스 번호와 같은게 있나?
@@ -170,23 +184,36 @@ public class MainActivity extends BaseActivity {
              if (hasBonusNum){
 //                 2등
                  winMoneyAmount += 75000000;
+                 secondRankCount++;
              }else {
 //                 3등
                  winMoneyAmount += 1500000;
+                 thirdRankCount++;
              }
 
             }
         }else if (correctCount == 4) {
 //            4등
             winMoneyAmount += 50000;
+            fourthRankCount++;
         }else if (correctCount == 3) {
 //            5등
             userMoneyAmount -= 5000;
+            fifthRankCount++;
         }else {
 //            꽝!
+            nothingCount++;
         }
 //        당첨금액 텍스트에도 반영
         binding.winMoneyTxt.setText(String.format("당첨금액 : %,d원", winMoneyAmount));
+//        당첨 횟수들도 텍스트뷰에 반영
+        binding.fistRankCountTxt.setText(String.format("1등 : %d회", firstRankCount));
+        binding.secondRankCountTxt.setText(String.format("2등 : %d회", secondRankCount));
+        binding.thirdRankCountTxt.setText(String.format("3등 : %d회", thirdRankCount));
+        binding.forthRankCountTxt.setText(String.format("4등 : %d회", fourthRankCount));
+        binding.fifthRankCountTxt.setText(String.format("5등 : %d회", fifthRankCount));
+        binding.nothingCountTxt.setText(String.format("꽝 : %d회", nothingCount));
+
 
     }
 }
