@@ -41,12 +41,13 @@ public class MainActivity extends BaseActivity {
         if (userMoneyAmount < 10000000 ){
             makeWinLottoNum();
             checkLottoRank();
+            buyLottoLoop();
         }else{
             Toast.makeText(mContext, "로또 구매를 종료합니다.", Toast.LENGTH_SHORT).show();
         }
     }
 };
-    void butLottoLoop() {
+    void buyLottoLoop() {
         mHandler.post(buyLottoRunable);
     }
 
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity {
 //                    makeWinLottoNum();
 //                    checkLottoRank();
 //                }
-                butLottoLoop();
+                buyLottoLoop();
             }
         });
 
