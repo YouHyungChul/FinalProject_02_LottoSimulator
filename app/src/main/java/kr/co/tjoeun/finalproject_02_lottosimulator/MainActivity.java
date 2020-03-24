@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,6 +31,24 @@ public class MainActivity extends BaseActivity {
     int fourthRankCount = 0;
     int fifthRankCount = 0;
     int nothingCount = 0;
+    
+//    로또를 사는 행동 패턴
+//   mHandler가 로또구매를 다루게
+    Handler mHandler = new Handler();
+    Runnable buyLottoRunable = new Runnable() {
+    @Override
+    public void run() {
+        if (userMoneyAmount < 10000000 ){
+            makeWinLottoNum();
+            checkLottoRank();
+        }else{
+            Toast.makeText(mContext, "로또 구매를 종료합니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+};
+    void butLottoLoop() {
+        mHandler.post(buyLottoRunable);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +65,12 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
 
 //                사용금액의총액이 1천만원이 될때까지 반복
-                while (userMoneyAmount < 100000000) {
-//                    당첨번호를 만들고 => 등수를 카운팅 반복
-                    makeWinLottoNum();
-                    checkLottoRank();
-                }
+//                while (firstRankCount < 1) {
+////                    당첨번호를 만들고 => 등수를 카운팅 반복
+//                    makeWinLottoNum();
+//                    checkLottoRank();
+//                }
+                butLottoLoop();
             }
         });
 
